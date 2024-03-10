@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 
-const a = ref(1)
-const c = ref(10)
-const d = ref(9.5)
-const e = ref(10)
+const a = ref("1")
+const c = ref("10")
+const d = ref("9.5")
+const e = ref("10")
 
 const rollOver = ref(false)
 
@@ -18,41 +18,41 @@ const rollOver = ref(false)
 // d = a * (95 / c) - a
 
 watch([c, e], ([newC, newE], [oldC, oldE]) => {
-  if (newC < 0.01 || newE < 0.01) return
+  if (parseFloat(newC) < 0.01 || parseFloat(newE) < 0.01) return
   if (newC !== oldC) {
     console.log("c", newC)
-    e.value = rollOver.value ? 100 - newC : newC
-    d.value = 95 / e.value
+    e.value = rollOver.value ? (99.99 - parseFloat(newC)).toFixed(2).toString() : parseFloat(newC).toFixed(2).toString()
+    d.value = (95 / parseFloat(e.value)).toFixed(4).toString()
   } else if (newE !== oldE) {
     console.log("e", newE)
-    c.value = rollOver.value ? 100 - newE : newE
-    d.value = 95 / newE
+    c.value = rollOver.value ? (99.99 - parseFloat(newE)).toFixed(2).toString() : parseFloat(newE).toFixed(2).toString()
+    d.value = (95 / parseFloat(newE)).toFixed(4).toString()
   }
 })
 
 watch(a, (newA, oldA) => {
-  if (newA < 0.1) return
+  if (parseFloat(newA) < 0.1) return
   if (newA !== oldA) {
     console.log("a", newA)
-    d.value = 95 / e.value
+    d.value = (95 / parseFloat(e.value)).toFixed(4)
   }
 })
 
 watch(d, (newD, oldD) => {
-  if (newD < 1.01) return
+  if (parseFloat(newD) < 1.01) return
   if (newD !== oldD) {
     console.log("d", newD)
-    e.value = 95 / newD
+    e.value = (95 / parseFloat(newD)).toFixed(2).toString()
   }
 })
 
 const profit = computed(() => {
-  return a.value * (95 / e.value) - a.value
+  return (parseFloat(a.value) * (95 / parseFloat(e.value)) - parseFloat(a.value)).toFixed(2).toString()
 })
 
 function toggleRollOver() {
   rollOver.value = !rollOver.value
-  c.value = 100 - c.value
+  c.value = (99.99 - parseFloat(c.value)).toFixed(2).toString()
 }
 </script>
 
@@ -73,7 +73,7 @@ function toggleRollOver() {
         <div className="pl-0 label">
           <span className="label-text">PROFIT ON WIN</span>
         </div>
-        <button className="w-full btn btn-outline btn-disabled no-animation btn-md">{{ profit.toFixed(2)
+        <button className="w-full btn btn-outline btn-disabled no-animation btn-md">{{ parseFloat(profit).toFixed(2)
           }}</button>
       </div>
       <!-- Roll Under -->
