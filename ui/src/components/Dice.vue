@@ -18,25 +18,28 @@ const rollOver = ref(false)
 // d = a * (95 / c) - a
 
 watch([c, e], ([newC, newE], [oldC, oldE]) => {
+  if (newC < 0.01 || newE < 0.01) return
   if (newC !== oldC) {
     console.log("c", newC)
-    e.value = newC
-    d.value = (95 / newC)
+    e.value = rollOver.value ? 100 - newC : newC
+    d.value = 95 / e.value
   } else if (newE !== oldE) {
     console.log("e", newE)
-    c.value = newE
-    d.value = (95 / newE)
+    c.value = rollOver.value ? 100 - newE : newE
+    d.value = 95 / newE
   }
 })
 
 watch(a, (newA, oldA) => {
+  if (newA < 0.1) return
   if (newA !== oldA) {
     console.log("a", newA)
-    d.value = (95 / c.value)
+    d.value = 95 / e.value
   }
 })
 
 watch(d, (newD, oldD) => {
+  if (newD < 1.01) return
   if (newD !== oldD) {
     console.log("d", newD)
     e.value = 95 / newD
@@ -44,11 +47,12 @@ watch(d, (newD, oldD) => {
 })
 
 const profit = computed(() => {
-  return a.value * (95 / c.value) - a.value
+  return a.value * (95 / e.value) - a.value
 })
 
 function toggleRollOver() {
   rollOver.value = !rollOver.value
+  c.value = 100 - c.value
 }
 </script>
 
