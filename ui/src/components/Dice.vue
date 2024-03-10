@@ -42,8 +42,8 @@ const { errors, register, handleSubmit, handleReset } = useForm({
 
     return errors
   },
-  onSubmit(data) {
-    console.log(data)
+  async onSubmit(data) {
+    console.log(JSON.stringify(data))
   }
 })
 
@@ -67,7 +67,13 @@ const { value: c } = register('rollValue', {
     }
   }
 })
-const { value: d } = register('multiplier')
+const { value: d } = register('multiplier', {
+  validate(value) {
+    if (value <= 0.01 || value >= 94) {
+      return "Multiplier should be between 0.01 and 94"
+    }
+  }
+})
 const { value: e } = register('winChance')
 const { value: rollOver } = register('roll')
 
@@ -78,9 +84,6 @@ const { value: rollOver } = register('roll')
 // c = rollUnder
 // d = multiplier
 // e = winChance
-
-// c = e
-// d = a * (95 / c) - a
 
 function removeZero(num: number, precision: number = 4): number {
   return (+(num).toFixed(precision) / 1)
@@ -119,7 +122,8 @@ watch(d, (newD, oldD) => {
 })
 
 const profit = computed(() => {
-  return removeZero((a.value * (95 / e.value) - a.value))
+  let USD = new Intl.NumberFormat('en-US', {})
+  return USD.format(removeZero((a.value * (95 / e.value) - a.value)))
 })
 
 function toggleRollOver() {
@@ -137,7 +141,7 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">BET AMOUNT</span>
           </div>
-          <input type="number" step=0.01 v-model.number="a" class="input input-bordered input-md w-full" />
+          <input type="number" step=0.01 v-model.number="a" class="input input-bordered w-full max-w-xs" />
           <div className="label">
             <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
     errors.betAmount }}</span>
@@ -148,7 +152,9 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">PROFIT ON WIN</span>
           </div>
-          <button class="w-full btn btn-outline btn-disabled no-animation btn-md">{{ removeZero(profit, 2) }}</button>
+          <button class="w-full max-w-xs btn btn-outline btn-disabled no-animation text-sm">{{
+    profit
+  }}</button>
         </div>
         <!-- Roll Under -->
         <div class="col-span-1">
@@ -175,13 +181,12 @@ function toggleRollOver() {
             </div>
             <!-- Roll Under Input -->
             <div class="col-span-2">
-              <input type="number" step=0.0001 v-model.number="c" class="input input-bordered input-md w-full" />
-              <div className="label">
-                <span className="label-text-alt"
-                  style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
-    errors.rollValue }}</span>
-              </div>
+              <input type="number" step=0.0001 v-model.number="c" class="input input-bordered w-full max-w-xs" />
             </div>
+          </div>
+          <div className="label">
+            <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
+    errors.rollValue }}</span>
           </div>
         </div>
         <!-- Multiplier -->
@@ -189,7 +194,7 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">MULTIPLIER</span>
           </div>
-          <input type="number" step=0.0001 v-model.number="d" class="input input-bordered input-md w-full" />
+          <input type="number" step=0.0001 v-model.number="d" class="input input-bordered w-full max-w-xs" />
           <div className="label">
             <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
     errors.multiplier }}</span>
@@ -200,7 +205,7 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">WIN CHANCE</span>
           </div>
-          <input type="number" step=0.0001 v-model.number="e" class="input input-bordered input-md w-full" />
+          <input type="number" step=0.0001 v-model.number="e" class="input input-bordered w-full max-w-xs" />
           <div className="label">
             <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
               errors.winChance }}</span>
