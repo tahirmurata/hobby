@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
 import { useForm } from '@vorms/core'
+import { IconArrowsSort, IconArrowsRightLeft } from '@tabler/icons-vue'
 
 const { errors, register, handleSubmit, handleReset } = useForm({
   initialValues: {
@@ -141,7 +142,8 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">BET AMOUNT</span>
           </div>
-          <input type="number" step=0.01 v-model.number="a" class="input input-bordered w-full max-w-xs" />
+          <input type="number" step=0.01 v-model.number="a" class="input input-bordered w-full max-w-xs"
+            inputmode="decimal" />
           <div className="label">
             <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
     errors.betAmount }}</span>
@@ -165,23 +167,14 @@ function toggleRollOver() {
             <!-- Roll Change Button -->
             <div class="col-span-1">
               <button @click.prevent="toggleRollOver" class="w-full btn btn-square">
-                <svg width="24px" height="24px" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                  xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
-                  <path d="M7 4L7 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round">
-                  </path>
-                  <path d="M7 9L7 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                  <path d="M17 20V4M17 4L20 7M17 4L14 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                    stroke-linejoin="round"></path>
-                  <path d="M7 14V20M7 20L10 17M7 20L4 17" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
+                <!-- <IconArrowsSort :size=24 :stroke-width=1.5 /> -->
+                <IconArrowsRightLeft :size=24 :stroke-width=1.5 />
               </button>
             </div>
             <!-- Roll Under Input -->
             <div class="col-span-2">
-              <input type="number" step=0.0001 v-model.number="c" class="input input-bordered w-full max-w-xs" />
+              <input type="number" step=0.0001 v-model.number="c" class="input input-bordered w-full max-w-xs"
+                inputmode="decimal" />
             </div>
           </div>
           <div className="label">
@@ -194,7 +187,8 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">MULTIPLIER</span>
           </div>
-          <input type="number" step=0.0001 v-model.number="d" class="input input-bordered w-full max-w-xs" />
+          <input type="number" step=0.0001 v-model.number="d" class="input input-bordered w-full max-w-xs"
+            inputmode="decimal" />
           <div className="label">
             <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
     errors.multiplier }}</span>
@@ -205,7 +199,8 @@ function toggleRollOver() {
           <div class="pl-0 label">
             <span class="label-text">WIN CHANCE</span>
           </div>
-          <input type="number" step=0.0001 v-model.number="e" class="input input-bordered w-full max-w-xs" />
+          <input type="number" step=0.0001 v-model.number="e" class="input input-bordered w-full max-w-xs"
+            inputmode="decimal" />
           <div className="label">
             <span className="label-text-alt" style="color: var(--fallback-er,oklch(var(--er)/var(--tw-bg-opacity)));">{{
               errors.winChance }}</span>

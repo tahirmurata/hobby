@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tabler/icons-vue": "^2.47.0",
     "@vorms/core": "^1.1.0",
     "vue": "^3.4.19",
     "vue-router": "4"
