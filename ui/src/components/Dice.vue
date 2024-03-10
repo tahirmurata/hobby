@@ -24,11 +24,13 @@ function removeZero(num: number, precision: number = 4): string {
 watch([c, e], ([newC, newE], [oldC, oldE]) => {
   if (parseFloat(newC) < 0.01 || parseFloat(newC) > 100 || parseFloat(newE) < 0.01 || parseFloat(newE) > 100) return
   if (newC !== oldC) {
-    c.value = removeZero(parseFloat(newC))
+    console.log("c", newC)
+    // c.value = removeZero(parseFloat(newC))
     e.value = removeZero(rollOver.value ? (99.99 - parseFloat(newC)) : parseFloat(newC))
     d.value = removeZero((95 / parseFloat(e.value)))
   } else if (newE !== oldE) {
-    e.value = removeZero(parseFloat(newE))
+    console.log("e", newE)
+    // e.value = removeZero(parseFloat(newE))
     c.value = removeZero(rollOver.value ? (99.99 - parseFloat(newE)) : parseFloat(newE))
     d.value = removeZero((95 / parseFloat(newE)))
   }
@@ -37,7 +39,8 @@ watch([c, e], ([newC, newE], [oldC, oldE]) => {
 watch(a, (newA, oldA) => {
   if (parseFloat(newA) < 0.1) return
   if (newA !== oldA) {
-    a.value = removeZero(parseFloat(newA))
+    console.log("a", newA)
+    // a.value = removeZero(parseFloat(newA))
     d.value = removeZero((95 / parseFloat(e.value)))
   }
 })
@@ -45,7 +48,7 @@ watch(a, (newA, oldA) => {
 watch(d, (newD, oldD) => {
   if (parseFloat(newD) < 1.01) return
   if (newD !== oldD) {
-    d.value = removeZero(parseFloat(newD))
+    // d.value = removeZero(parseFloat(newD))
     e.value = removeZero((95 / parseFloat(newD)))
   }
 })

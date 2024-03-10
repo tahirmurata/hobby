@@ -40,7 +40,7 @@
         <a className="btn">Button</a>
       </div>
     </div>
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div class="fixed inset-0 flex items-center justify-center">
       <router-view></router-view>
     </div>
   </div>
