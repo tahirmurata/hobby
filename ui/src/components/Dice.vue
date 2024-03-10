@@ -17,35 +17,35 @@ const rollOver = ref(false)
 // c = e
 // d = a * (95 / c) - a
 
-function removeZero(num: number, precision: number = 2) {
-  return num.toFixed(precision).replace(/([0-9]+(\.[0-9]+[1-9])?)(\.?0+$)/, '$1')
+function removeZero(num: number, precision: number = 4): string {
+  return (+(+(num)).toFixed(precision) / 1).toString()
 }
 
 watch([c, e], ([newC, newE], [oldC, oldE]) => {
   if (parseFloat(newC) < 0.01 || parseFloat(newC) > 100 || parseFloat(newE) < 0.01 || parseFloat(newE) > 100) return
   if (newC !== oldC) {
-    console.log("c", newC)
+    c.value = removeZero(parseFloat(newC))
     e.value = removeZero(rollOver.value ? (99.99 - parseFloat(newC)) : parseFloat(newC))
-    d.value = removeZero((95 / parseFloat(e.value)), 4)
+    d.value = removeZero((95 / parseFloat(e.value)))
   } else if (newE !== oldE) {
-    console.log("e", newE)
+    e.value = removeZero(parseFloat(newE))
     c.value = removeZero(rollOver.value ? (99.99 - parseFloat(newE)) : parseFloat(newE))
-    d.value = removeZero((95 / parseFloat(newE)), 4)
+    d.value = removeZero((95 / parseFloat(newE)))
   }
 })
 
 watch(a, (newA, oldA) => {
   if (parseFloat(newA) < 0.1) return
   if (newA !== oldA) {
-    console.log("a", newA)
-    d.value = removeZero((95 / parseFloat(parseFloat(e.value).toFixed(0.1))), 4)
+    a.value = removeZero(parseFloat(newA))
+    d.value = removeZero((95 / parseFloat(e.value)))
   }
 })
 
 watch(d, (newD, oldD) => {
   if (parseFloat(newD) < 1.01) return
   if (newD !== oldD) {
-    console.log("d", newD)
+    d.value = removeZero(parseFloat(newD))
     e.value = removeZero((95 / parseFloat(newD)))
   }
 })
