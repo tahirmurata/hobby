@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vorms/core": "^1.1.0",
     "vue": "^3.4.19",
     "vue-router": "4"
   },
