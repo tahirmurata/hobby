@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { IconCoin, IconMenu2 } from '@tabler/icons-vue';
+import { IconPlus, IconCoins, IconMenu2 } from '@tabler/icons-vue';
+
+import { state } from './main';
 </script>
 
 <template>
@@ -28,16 +30,19 @@ import { IconCoin, IconMenu2 } from '@tabler/icons-vue';
         </ul>
       </div>
       <div class="navbar-end">
-        <a class="btn btn-neutral no-animation">
-          <IconCoin :stroke-width=1.5 />
-          <span class="text-base">
-            240
-          </span>
-        </a>
+        <div className="join">
+          <div class="btn btn-neutral join-item no-animation">
+            <IconCoins :size=20 :stroke-width=1.5 />
+            <span class="text-base">
+              {{ state.coins }}
+            </span>
+          </div>
+          <button className="btn join-item px-3">
+            <IconPlus :size=28 :stroke-width=1.5 />
+          </button>
+        </div>
       </div>
     </div>
-    <div class="pointer-events-none fixed inset-0 flex items-center justify-center">
-      <router-view class="pointer-events-auto"></router-view>
-    </div>
+    <router-view></router-view>
   </div>
 </template>

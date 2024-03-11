@@ -1,14 +1,12 @@
-import { createApp } from "vue";
+import { createApp, reactive } from "vue";
 import "./style.css";
 import { createRouter, createWebHashHistory } from "vue-router";
-import HelloWorld from "./components/HelloWorld.vue";
 import Dice from "./components/Dice.vue";
 import App from "./App.vue";
 
-const routes = [
-  { path: "/hello", component: HelloWorld },
-  { path: "/dice", component: Dice },
-];
+const routes = [{ path: "/dice", component: Dice }];
+
+export const state = reactive({ coins: 100 });
 
 const router = createRouter({
   history: createWebHashHistory(),
